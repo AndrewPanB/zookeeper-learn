@@ -6,14 +6,12 @@ import org.I0Itec.zkclient.IZkDataListener;
 import org.I0Itec.zkclient.ZkClient;
 
 public class ZookeeperLock {
-    //连接zk服务器
 
-    //create temprapory sequece node
-    private ZkClient zkClient;
+    private final ZkClient zkClient;
 
+    //connect zk server
     public ZookeeperLock() {
         zkClient = new ZkClient("192.168.1.14:2181", 30000, 20000);
-        System.out.println("px exist in zk: "+ zkClient.exists("/px"));
     }
 
     //get lock
@@ -82,17 +80,5 @@ public class ZookeeperLock {
         myLock.setLockId(lockId);
         myLock.setActive(false);
         return myLock;
-    }
-
-    public static void main(String[] args) {
-
-
-        System.out.println("Hello");
-        MyLock myLock = new MyLock();
-        myLock.setActive(true);
-        myLock.setLockId("lockId-1");
-        myLock.setPath("path-1");
-
-        System.out.println(myLock);
     }
 }
