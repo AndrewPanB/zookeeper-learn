@@ -15,7 +15,7 @@ public class ZookeeperLock {
     }
 
     //get lock
-    public MyLock lock(String lockId, long timeout) throws Exception {
+    public MyLock lock(String lockId, long timeout) throws InterruptedException {
         MyLock lockNode = createLockNode(lockId);
         MyLock myLock = tryActiveLock(lockNode);
         if (!myLock.isActive()) {
@@ -70,6 +70,9 @@ public class ZookeeperLock {
 
     //unlock
     public void unlock(MyLock lock) {
+        if(lock.isActive()){
+            zkClient.delete(lock.getPath());
+        }
     }
 
     //crete temparory node
